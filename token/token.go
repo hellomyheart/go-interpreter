@@ -40,3 +40,18 @@ type Token struct {
 	Type    TokenType
 	Literal string
 }
+
+// 定义关键字
+var keywords = map[string]TokenType{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
+func LookupIdent(ident string) TokenType {
+	// 从map中获取，获取到则返回关键字
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+	// 找不到则返回标识符
+	return IDENT
+}
