@@ -1,5 +1,6 @@
 package token
 
+// 把所有的词都以常量的形式声明
 const (
 	// 非法的
 	ILLEGAL = "ILLEGAL"
@@ -30,8 +31,11 @@ const (
 	LET      = "LET"
 )
 
+// 词的类型
 type TokenType string
 
+// 词结构体
+// 当前是包含的词的类型 和词的值
 type Token struct {
 	Type    TokenType
 	Literal string

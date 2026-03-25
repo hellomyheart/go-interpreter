@@ -6,13 +6,18 @@ import (
 	"go-interpreter/token"
 )
 
+// 测试词法分析器的NextToken方法
 func TestNextToken(t *testing.T) {
+
+	// 设置一个字符串，充当源代码
 	input := `=+(){},;`
 
+	// 定义一个测试用例的切片，包含了期望的Token类型和Token值
 	tests := []struct {
 		expectedType    token.TokenType
 		expectedLiteral string
 	}{
+		// 设置期望的Token类型和Token值
 		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
 		{token.LPAREN, "("},
@@ -23,15 +28,23 @@ func TestNextToken(t *testing.T) {
 		{token.SEMICOLON, ";"},
 		{token.EOF, ""},
 	}
+
+	// 构造一个词法分析器实例l, 把源代码赋值到词法分析器的input字段
 	l := New(input)
 
+	// 遍历预期结果tests
 	for i, tt := range tests {
+		// 获取Token
 		tok := l.NextToken()
+		// 预期结果和词法分析器获取到的结果比较
 		if tok.Type != tt.expectedType {
+			// 类型不相等，测试失败，输出错误信息
 			t.Fatalf("tests[%d] - tokentype wrong. expected=%q, got=%q", i, tt.expectedType, tok.Type)
 		}
 
+		// 预期结果和词法分析器获取到值的结果比较
 		if tok.Literal != tt.expectedLiteral {
+
 			t.Fatalf("tests[%d] - literal wrong. expected=%q, got=%q", i, tt.expectedLiteral, tok.Literal)
 		}
 	}
