@@ -10,13 +10,15 @@ import (
 func TestNextToken(t *testing.T) {
 
 	// 设置一个字符串，充当源代码
-	input := `let five = 5;
-	let ten = 10;
-	let add = fn(x, y) {
-		x + y;
-	};
-	
-	let result = add(five, ten);
+	input := `func TestNextToken(t *testing.T) {
+input :=let five = 5;
+let ten = 10;
+let add = fn(x, y) {
+x + y;
+};
+let result = add(five, ten);
+!-/*5;
+5 < 10 > 5;
 	`
 
 	// 定义一个测试用例的切片，包含了期望的Token类型和Token值
