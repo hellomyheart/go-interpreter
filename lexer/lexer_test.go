@@ -10,8 +10,7 @@ import (
 func TestNextToken(t *testing.T) {
 
 	// 设置一个字符串，充当源代码
-	input := `func TestNextToken(t *testing.T) {
-input :=let five = 5;
+	input := `let five = 5;
 let ten = 10;
 let add = fn(x, y) {
 x + y;
@@ -19,7 +18,14 @@ x + y;
 let result = add(five, ten);
 !-/*5;
 5 < 10 > 5;
-	`
+if (5 < 10) {
+return true;
+} else {
+return false;
+}
+10 == 10;
+10 != 9;
+`
 
 	// 定义一个测试用例的切片，包含了期望的Token类型和Token值
 	tests := []struct {

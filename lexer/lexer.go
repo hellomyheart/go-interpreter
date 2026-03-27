@@ -53,13 +53,40 @@ func (l *Lexer) NextToken() token.Token {
 	// 根据ch 字符的不同创建不同类型的词（类型、值）
 	switch l.ch {
 	case '=':
-		tok = newToken(token.ASSIGN, l.ch)
+		// 判断下一个字符是 =
+		if l.peekChar() == '=' {
+			// 临时缓存当前字符
+			ch := l.ch
+			// 读取下一个字符
+			l.readChar()
+			// 两个字符合并
+			literal := string(ch) + string(l.ch)
+			// 构建token
+			tok = token.Token{Type: token.EQ, Literal: literal}
+		} else {
+			// 直接构建 =
+			tok = newToken(token.ASSIGN, l.ch)
+		}
+
 	case '+':
 		tok = newToken(token.PLUS, l.ch)
 	case '-':
 		tok = newToken(token.MINUS, l.ch)
 	case '!':
-		tok = newToken(token.BANG, l.ch)
+		// 判断下一个字符是否是 =
+		if l.peekChar() == '=' {
+			// 临时缓存当前字符
+			ch := l.ch
+			// 读取下一个字符
+			l.readChar()
+			// 两个字符合并
+			literal := string(ch) + string(l.ch)
+			// 构建token
+			tok = token.Token{Type: token.NOT_EQ, Literal: literal}
+		} else {
+			// 直接构建 =
+			tok = newToken(token.BANG, l.ch)
+		}
 	case '/':
 		tok = newToken(token.SLASH, l.ch)
 	case '*':
@@ -151,4 +178,13 @@ func (l *Lexer) skipWhitespace() {
 // Token的构造函数， 设置token的类型和token的值
 func newToken(tokenType token.TokenType, ch byte) token.Token {
 	return token.Token{Type: tokenType, Literal: string(ch)}
+}
+
+// 查看下一个字符但不移动指针
+func (l *Lexer) peekChar() byte {
+	if l.readPosition >= len(l.input) {
+		return 0
+	} else {
+		return l.input[l.readPosition]
+	}
 }
