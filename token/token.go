@@ -51,7 +51,9 @@ type TokenType string
 // 词结构体
 // 当前是包含的词的类型 和词的值
 type Token struct {
-	Type    TokenType
+	// 词的类型
+	Type TokenType
+	// 词的值
 	Literal string
 }
 
